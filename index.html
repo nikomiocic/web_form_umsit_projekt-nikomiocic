@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Web forma</title>
+    <style>
+        /* Pretjerani stilovi za demonstraciju */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #bd6307;
+            margin: 0;
+            padding: 20px;
+        }
+
+        form {
+            background-color: #4efd00;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            margin-bottom: 20px;
+        }
+
+        fieldset {
+            border: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        legend {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        input[type="text"],
+        select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ffffff;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+
+        input[type="checkbox"],
+        input[type="radio"] {
+            margin-right: 5px;
+        }
+
+        input[type="submit"] {
+            background-color: #4CAF50;
+            color: #ffffff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        p {
+            margin-top: 20px;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .form-section {
+            margin-bottom: 20px;
+            border: 1px solid #4c81af;
+            border-radius: 5px;
+            padding: 10px;
+        }
+    </style>
+</head>
+<body>
+<form>
+    <div class="form-section">
+        <fieldset>
+            <legend>Osobni podaci</legend>
+            <label for="name">Ime:</label>
+            <input type="text" id="name" name="name" required>
+
+            <label for="email">Email:</label>
+            <input type="text" id="email" name="email" required>
+        </fieldset>
+    </div>
+
+    <div class="form-section">
+        <fieldset>
+            <legend>Podaci o putovanju</legend>
+            <label for="country">Drzava:</label>
+            <select id="country" name="country" required>
+                <option value="">Odaberi drzavu</option>
+                <option value="hr">Hrvatska</option>
+                <option value="us">Sjedinjene Americke Drzave</option>
+                <option value="uk">Ujedinjeno Kraljevstvo</option>
+            </select>
+
+            <legend>Plus paketi:</legend>
+            <div class="checkbox-group">
+                <input type="checkbox" id="option1" name="option1" value="Option 1">
+                <label for="option1">Ukljucena hrana</label>
+            </div>
+            <div class="checkbox-group">
+                <input type="checkbox" id="option2" name="option2" value="Option 2">
+                <label for="option2">Ukljuceno prenociste</label>
+            </div>
+            <div class="checkbox-group">
+                <input type="checkbox" id="option3" name="option3" value="Option 3">
+                <label for="option3">Ukljucen vodic</label>
+            </div>
+
+            <legend>Kako putovati:</legend>
+            <div class="radio-group">
+                <input type="radio" id="radio1" name="radio" value="Radio 1">
+                <label for="radio1">Avionom</label>
+            </div>
+            <div class="radio-group">
+                <input type="radio" id="radio2" name="radio" value="Radio 2">
+                <label for="radio2">Vlakom</label>
+            </div>
+            <div class="radio-group">
+                <input type="radio" id="radio3" name="radio" value="Radio 3">
+                <label for="radio3">Autom</label>
+            </div>
+        </fieldset>
+    </div>
+
+    <input type="submit" value="Send data">
+</form>
+
+<script>
+    const form = document.querySelector('form');
+    const submitButton = document.querySelector('input[type="submit"]');
+
+    submitButton.addEventListener('click', function(event) {
+        event.preventDefault();
+        const name = document.getElementById('name').value;
+        const email = document.getElementById('email').value;
+        const country = document.getElementById('country').value;
+        const options = document.querySelectorAll('input[type="checkbox"]:checked');
+        const radios = document.querySelector('input[type="radio"]:checked');
+
+        if (name === '' || email === '' || country === '' || !radios || options.length === 0) {
+            alert('Molimo popunite sva polja!');
+        } else {
+            const formData = {
+                Name: name,
+                Email: email,
+                Country: country,
+                Options: Array.from(options).map(option => option.value),
+                Radio: radios.value
+            };
+
+            const paragraph = document.createElement('p');
+            paragraph.textContent = JSON.stringify(formData);
+            document.body.appendChild(paragraph);
+            form.reset();
+        }
+    });
+    function resetBackgrounds() {
+        const elements = document.querySelectorAll('body, .form-section, label, select, option, legend, form, p');
+        elements.forEach(element => {
+            element.style.backgroundColor = 'lightblue';
+        });
+
+        const buttons = document.querySelectorAll('button, input[type="submit"]');
+        buttons.forEach(button => {
+            button.style.backgroundColor = 'blue';
+        });
+    }
+</script>
+<button onclick="resetBackgrounds()">Promijeni stil!</button>
+</body>
+</html>
